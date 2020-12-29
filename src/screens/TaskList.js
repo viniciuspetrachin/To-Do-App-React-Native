@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, ImageBackground } from 'react-native';
+import { View, Text, StyleSheet, ImageBackground, FlatList } from 'react-native';
 import todayImage from '../../assets/imgs/today.jpg'
 import commomStyles from '../commonStyles'
 import moment from 'moment'
@@ -8,8 +8,71 @@ import commonStyles from '../commonStyles';
 import Task from '../components/Task'
 
 export default class screens extends Component {
-  render() {
 
+   state = {
+      tasks:[{
+         id: Math.random(),
+         desc: 'Comprar livro',
+         estimateAt: new Date(),
+         doneAt: null,
+      },
+      {
+         id: Math.random(),
+         desc: 'Comprar livro',
+         estimateAt: new Date(),
+         doneAt: null,
+      },
+      {
+         id: Math.random(),
+         desc: 'Comprar livro',
+         estimateAt: new Date(),
+         doneAt: null,
+      },
+      {
+         id: Math.random(),
+         desc: 'Comprar livro',
+         estimateAt: new Date(),
+         doneAt: null,
+      },
+      {
+         id: Math.random(),
+         desc: 'Comprar livro',
+         estimateAt: new Date(),
+         doneAt: null,
+      },
+      {
+         id: Math.random(),
+         desc: 'Comprar livro',
+         estimateAt: new Date(),
+         doneAt: null,
+      },
+      {
+         id: Math.random(),
+         desc: 'Comprar livro',
+         estimateAt: new Date(),
+         doneAt: null,
+      },
+      {
+         id: Math.random(),
+         desc: 'Comprar livro',
+         estimateAt: new Date(),
+         doneAt: null,
+      },
+      {
+         id: Math.random(),
+         desc: 'Comprar livro',
+         estimateAt: new Date(),
+         doneAt: null,
+      },
+      {
+         id: Math.random(),
+         desc: 'Comprar livro',
+         estimateAt: new Date(),
+         doneAt: new Date(),
+      }]
+   }
+
+  render() {
    const today = moment().locale('pt-br').format('ddd, D [de] MMMM')
 
     return(
@@ -21,11 +84,11 @@ export default class screens extends Component {
              </View>
           </ImageBackground>
           <View style={styles.task}>
-            <Task desc="Dar beijinhos no mor" estimateAt={new Date()} doneAt={new Date()} />
-            <Task desc="Fazer carinho na Jojo" estimateAt={new Date()} doneAt={new Date()} />
-            <Task desc="Dar cheirinhos na jojo" estimateAt={new Date()} doneAt={null} />
-            <Task desc="Mandar a kessie pegar calango" estimateAt={new Date()} doneAt={new Date()} />
-            <Task desc="Assistir Mr Robots" estimateAt={new Date()} doneAt={null}/>
+            <FlatList 
+               data={this.state.tasks}
+               keyExtractor={item => `${item.id}`}
+               renderItem={({item}) => <Task {...item}/>}
+            />
           </View>
        </View>
     )
