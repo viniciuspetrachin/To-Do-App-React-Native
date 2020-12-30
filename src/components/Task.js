@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
       alignItems: 'center',
       borderColor: '#AAA',
-      borderWidth: 1,
+      borderBottomWidth: 1,
       paddingVertical: 10
    },
    checkContainer:{

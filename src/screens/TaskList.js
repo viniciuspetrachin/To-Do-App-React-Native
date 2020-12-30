@@ -16,11 +16,16 @@ import moment from 'moment'
 import 'moment/locale/pt-br'
 import commonStyles from '../commonStyles';
 import Task from '../components/Task'
+import AddTask from './AddTask'
 
 export default class screens extends Component {
 
    state = {
+      showAddTask: true,
+
       showDoneTasks: true,
+
+      visibleTasks:[],
 
       tasks:[{
          id: Math.random(),
@@ -42,8 +47,24 @@ export default class screens extends Component {
       }]
    }
 
+   componentDidMount =  () => {
+      this.filterTasks()
+   }
+   
+   filterTasks = () => {
+      let visibleTasks = null
+      if(this.state.showDoneTasks){
+         visibleTasks=[...this.state.tasks]
+      } else {
+         const pending = task => task.doneAt === null
+         visibleTasks = this.state.tasks.filter(pending)
+      }
+
+      this.setState({visibleTasks})
+   }
+
    toggleFilter = () => {
-      this.setState({showDoneTasks : !this.state.showDoneTasks})
+      this.setState({showDoneTasks : !this.state.showDoneTasks}, this.filterTasks)
    }
 
    toggleTask = taskId => {
@@ -54,7 +75,7 @@ export default class screens extends Component {
          }
       })
 
-      this.setState({tasks})
+      this.setState({tasks}, this.filterTasks)
    }
 
   render() {
@@ -62,6 +83,12 @@ export default class screens extends Component {
 
     return(
        <View style={styles.container}>
+
+          <AddTask 
+          isVisible={this.state.showAddTask}
+          onCancel={() => this.setState({showAddTask : false})}
+          />
+
           <ImageBackground style={styles.background} source={todayImage}>
              <View style={styles.iconBar}>
                <TouchableOpacity onPress={this.toggleFilter}>
@@ -77,7 +104,7 @@ export default class screens extends Component {
           </ImageBackground>
           <View style={styles.task}>
             <FlatList 
-               data={this.state.tasks}
+               data={this.state.visibleTasks}
                keyExtractor={item => `${item.id}`}
                renderItem={({item}) => <Task {...item} toggleTask={this.toggleTask}/>}
             />
