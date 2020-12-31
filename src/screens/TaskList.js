@@ -29,19 +29,19 @@ export default class screens extends Component {
 
       tasks:[{
          id: Math.random(),
-         desc: 'Comprar livro',
+         desc: 'Arroz',
          estimateAt: new Date(),
          doneAt: null,
       },
       {
          id: Math.random(),
-         desc: 'Ler o livro',
+         desc: 'Feijão',
          estimateAt: new Date(),
          doneAt: new Date(),
       },
       {
          id: Math.random(),
-         desc: 'Estudar o livro',
+         desc: 'Batata Frita',
          estimateAt: new Date(),
          doneAt: null,
       }]
