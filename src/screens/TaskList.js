@@ -94,6 +94,11 @@ export default class screens extends Component {
       this.setState({tasks, showAddTask: false}, this.filterTasks)
    }
 
+   deleteTask = id => {
+      const tasks = this.state.tasks.filter(task => task.id !== id)
+      this.setState({tasks}, this.filterTasks)
+   }
+
   render() {
    const today = moment().locale('pt-br').format('ddd, D [de] MMMM')
 
@@ -123,7 +128,7 @@ export default class screens extends Component {
             <FlatList 
                data={this.state.visibleTasks}
                keyExtractor={item => `${item.id}`}
-               renderItem={({item}) => <Task {...item} toggleTask={this.toggleTask}/>}
+               renderItem={({item}) => <Task {...item} toggleTask={this.toggleTask} onDelete={this.deleteTask}/>}
             />
           </View>
           <TouchableOpacity
