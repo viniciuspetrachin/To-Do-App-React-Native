@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1019468433327",
+    "project_id": "lista-ai-2cc11",
+    "storage_bucket": "lista-ai-2cc11.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1019468433327:android:6f9df5072b2cb3f53e915a",
+        "android_client_info": {
+          "package_name": "com.tasks"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1019468433327-ag7e5afemn2l1m9idajdedmnprb15m50.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCZE-RBgsWgUA_0w5hJjmyTJbvVfzZfx6o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1019468433327-ag7e5afemn2l1m9idajdedmnprb15m50.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

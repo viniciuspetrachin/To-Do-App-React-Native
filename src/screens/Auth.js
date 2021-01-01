@@ -3,13 +3,13 @@ import {
    View, 
    ImageBackground, 
    Text, StyleSheet, 
-   TextInput,
    TouchableOpacity,
    Alert
 } from 'react-native'
 import backgroundImg from '../../assets/imgs/login.jpg'
 import commonStyle from '../commonStyles'
 import AuthInput from '../components/AuthInput'
+import auth from '@react-native-firebase/auth'
 
 export default class screens extends Component {
 
