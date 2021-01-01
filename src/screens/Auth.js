@@ -14,8 +14,11 @@ import commonStyle from '../commonStyles'
 export default class screens extends Component {
 
    state = {
+      name: '',
       email: '',
-      password: ''
+      password: '',
+      confirmPassword: '',
+      stageNew: false,
    }
 
   render() {
@@ -23,6 +26,15 @@ export default class screens extends Component {
        <ImageBackground style={styles.background} source={backgroundImg}>
           <Text style={styles.title}>Tasks</Text>
           <View style={styles.form}>
+             {
+                this.state.stageNew && 
+                  <TextInput 
+                     placeholder="Nome"
+                     value={this.state.name}
+                     onChangeText={name => this.setState({name})}
+                     style={styles.input}
+                  />
+             }
             <TextInput 
                placeholder="E-mail"
                value={this.state.email}
@@ -34,10 +46,23 @@ export default class screens extends Component {
                value={this.state.password}
                onChangeText={password => this.setState({password})}
                style={styles.input}
+               secureTextEntry={true}
             />
+            { 
+               this.state.stageNew &&
+               <TextInput 
+               placeholder="Confirme a senha"
+               value={this.state.confirmPassword}
+               onChangeText={confirmPassword => this.setState({confirmPassword})}
+               style={styles.input}
+               secureTextEntry={true}
+            />
+            }
             <TouchableOpacity>
                <View style={styles.button}>
-                  <Text style={styles.buttonText}>Entrar</Text>
+                  <Text style={styles.buttonText}>
+                     {this.state.stageNew ? 'Registrar' : 'Entrar'}
+                  </Text>
                </View>
             </TouchableOpacity>
           </View>
