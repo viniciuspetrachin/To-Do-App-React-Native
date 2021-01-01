@@ -4,12 +4,12 @@ import {
    ImageBackground, 
    Text, StyleSheet, 
    TextInput,
-   TouchableOpacity
+   TouchableOpacity,
+   Alert
 } from 'react-native'
 import backgroundImg from '../../assets/imgs/login.jpg'
 import commonStyle from '../commonStyles'
-
-// import { Container } from './styles';
+import AuthInput from '../components/AuthInput'
 
 export default class screens extends Component {
 
@@ -21,28 +21,42 @@ export default class screens extends Component {
       stageNew: false,
    }
 
+   signinOrSignup = () => {
+      if(this.state.stageNew) {
+         Alert.alert('Sucesso!', 'Criar conta')
+      } else {
+         Alert.alert('Sucesso!', 'Logar')
+      }
+   }
+
   render() {
     return (
        <ImageBackground style={styles.background} source={backgroundImg}>
           <Text style={styles.title}>Tasks</Text>
           <View style={styles.form}>
+             <Text style={styles.subtitle}>
+               {this.state.stageNew ? 'Crie sua conta' : 'Informe seus dados'}
+             </Text>
              {
                 this.state.stageNew && 
-                  <TextInput 
+                  <AuthInput 
                      placeholder="Nome"
+                     icon="user"
                      value={this.state.name}
                      onChangeText={name => this.setState({name})}
                      style={styles.input}
                   />
              }
-            <TextInput 
+            <AuthInput 
                placeholder="E-mail"
+               icon="at"
                value={this.state.email}
                onChangeText={email => this.setState({email})}
                style={styles.input}
             />
-            <TextInput 
+            <AuthInput 
                placeholder="Senha"
+               icon="lock"
                value={this.state.password}
                onChangeText={password => this.setState({password})}
                style={styles.input}
@@ -50,20 +64,27 @@ export default class screens extends Component {
             />
             { 
                this.state.stageNew &&
-               <TextInput 
+               <AuthInput 
                placeholder="Confirme a senha"
+               icon="asterisk"
                value={this.state.confirmPassword}
                onChangeText={confirmPassword => this.setState({confirmPassword})}
                style={styles.input}
                secureTextEntry={true}
             />
             }
-            <TouchableOpacity>
+            <TouchableOpacity onPress={this.signinOrSignup}>
                <View style={styles.button}>
                   <Text style={styles.buttonText}>
                      {this.state.stageNew ? 'Registrar' : 'Entrar'}
-                  </Text>
+                     </Text>
                </View>
+            </TouchableOpacity>
+            <TouchableOpacity style={{padding: 10, alignItems: 'center'}}
+               onPress={() => this.setState({ stageNew: !this.state.stageNew})}>
+               <Text style={styles.buttonText}>
+                  {this.state.stageNew ? 'Já possui conta?' : 'Ainda não possui conta?'}
+               </Text>
             </TouchableOpacity>
           </View>
        </ImageBackground>
@@ -98,12 +119,20 @@ const styles = StyleSheet.create({
       backgroundColor: '#080',
       marginTop: 10,
       padding: 10,
-      alignItems: 'center'
+      alignItems: 'center',
+      borderRadius: 10
    },
    buttonText:{
       fontFamily: commonStyle.fontFamily,
       color: '#FFF',
       fontSize: 20,
+   },
+   subtitle:{
+      fontFamily: commonStyle.fontFamily,
+      color: '#FFF',
+      fontSize: 20,
+      textAlign: 'center',
+      marginBottom: 10,
    }
 
 })
