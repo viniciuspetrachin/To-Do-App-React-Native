@@ -35,6 +35,11 @@ export default class screens extends Component {
                onChangeText={password => this.setState({password})}
                style={styles.input}
             />
+            <TouchableOpacity>
+               <View style={styles.button}>
+                  <Text style={styles.buttonText}>Entrar</Text>
+               </View>
+            </TouchableOpacity>
           </View>
        </ImageBackground>
     )
@@ -55,11 +60,25 @@ const styles = StyleSheet.create({
       marginBottom: 10
    },
    input:{
-
+      backgroundColor: '#FFF',
+      marginTop: 10,
    },
    form:{
-      backgroundColor: '#FFF',
+      backgroundColor: 'rgba(0, 0, 0, 0.8)',
       padding: 20,
+      width: '90%',
+
+   },
+   button:{
+      backgroundColor: '#080',
+      marginTop: 10,
+      padding: 10,
+      alignItems: 'center'
+   },
+   buttonText:{
+      fontFamily: commonStyle.fontFamily,
+      color: '#FFF',
+      fontSize: 20,
    }
 
 })
