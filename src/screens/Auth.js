@@ -3,13 +3,15 @@ import {
    View, 
    ImageBackground, 
    Text, StyleSheet, 
-   TextInput,
    TouchableOpacity,
    Alert
 } from 'react-native'
 import backgroundImg from '../../assets/imgs/login.jpg'
 import commonStyle from '../commonStyles'
 import AuthInput from '../components/AuthInput'
+
+import {showError, showSuccess} from '../common'
+
 
 export default class screens extends Component {
 
@@ -24,9 +26,17 @@ export default class screens extends Component {
    signinOrSignup = () => {
       if(this.state.stageNew) {
          Alert.alert('Sucesso!', 'Criar conta')
+         this.props.navigation.navigate('Home')
       } else {
          Alert.alert('Sucesso!', 'Logar')
+         this.props.navigation.navigate('Home')
       }
+   }
+   signup = async () => {
+
+   }
+   signin = async () => {
+
    }
 
   render() {
