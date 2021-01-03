@@ -14,6 +14,10 @@ import moment from 'moment'
 import 'moment/locale/pt-br'
 
 import todayImage from '../../assets/imgs/today.jpg'
+import tomorrowImage from '../../assets/imgs/tomorrow.jpg'
+import weekImage from '../../assets/imgs/week.jpg'
+import monthImage from '../../assets/imgs/month.jpg'
+
 import commomStyles from '../commonStyles'
 import commonStyles from '../commonStyles';
 import Task from '../components/Task'
@@ -87,6 +91,23 @@ export default class screens extends Component {
       this.setState({tasks}, this.filterTasks)
    }
 
+   getImage = () => {
+      switch(this.props.daysAhead) {
+         case 0: return todayImage
+         case 1: return tomorrowImage
+         case 7: return weekImage
+         case 30: return monthImage
+      }
+   }
+   getColor = () => {
+      switch(this.props.daysAhead) {
+         case 0: return commonStyles.colors.today
+         case 1: return commonStyles.colors.tomorrow
+         case 7: return commonStyles.colors.week
+         case 30: return commonStyles.colors.month
+      }
+   }
+
   render() {
    const today = moment().locale('pt-br').format('ddd, D [de] MMMM')
 
@@ -99,8 +120,11 @@ export default class screens extends Component {
           onSave={this.addTask}
           />
 
-          <ImageBackground style={styles.background} source={todayImage}>
+          <ImageBackground style={styles.background} source={this.getImage()}>
              <View style={styles.iconBar}>
+                <TouchableOpacity onPress={() => this.props.navigation.openDrawer()}>
+                  <Icon name='bars' size={20} color={commomStyles.colors.secondary}/>
+                </TouchableOpacity>
                <TouchableOpacity onPress={this.toggleFilter}>
                   <Icon name={this.state.showDoneTasks ? 'eye' : 'eye-slash'} 
                   size={20} 
@@ -108,7 +132,7 @@ export default class screens extends Component {
                </TouchableOpacity>
              </View>
              <View style={styles.titleBar}>
-               <Text style={styles.title}>Hoje</Text>
+               <Text style={styles.title}>{this.props.title}</Text>
                <Text style={styles.subtitle}>{today}</Text>
              </View>
           </ImageBackground>
@@ -120,7 +144,7 @@ export default class screens extends Component {
             />
           </View>
           <TouchableOpacity
-            style={styles.addButton}
+            style={[styles.addButton, {backgroundColor: this.getColor()}]}
             onPress={() => this.setState({ showAddTask: true})}
             >
              <Icon name='plus' size={20}
@@ -162,7 +186,7 @@ const styles = StyleSheet.create({
    iconBar:{
       flexDirection: 'row',
       marginHorizontal: 20,
-      justifyContent: 'flex-end',
+      justifyContent: 'space-between',
       marginTop: Platform.OS === 'ios' ? 30 : 10
    },
    addButton: {
@@ -172,7 +196,6 @@ const styles = StyleSheet.create({
       width: 50,
       height: 50,
       borderRadius: 25,
-      backgroundColor: commonStyles.colors.today,
       justifyContent: 'center',
       alignItems: 'center'
    }
