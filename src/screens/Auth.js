@@ -13,14 +13,18 @@ import { firebase } from '../firebase/config'
 import { showError, showSuccess } from '../common'
 
 
+const initialState = {
+      name: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+      stageNew: false,
+}
+
 export default class screens extends Component {
 
    state = {
-      name: '',
-      email: 'vr.petrachin@gmail.com',
-      password: '123123123',
-      confirmPassword: '',
-      stageNew: false,
+      ...initialState
    }
 
    signinOrSignup = () => {
@@ -33,7 +37,7 @@ export default class screens extends Component {
    signup = () => {
       firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
          .then((response) => {
-            this.props.navigation.navigate('Home')
+            this.setState({...initialState}, showSuccess('Usuário criado!'))
          })
          .catch((error) => {
             showError(error)
@@ -42,7 +46,7 @@ export default class screens extends Component {
    signin = () => {
       firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
          .then((response) => {
-            this.props.navigation.navigate('Home')
+            this.props.navigation.navigate('Home', response.user)
          })
          .catch((error) => {
             showError(error)
