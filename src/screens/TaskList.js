@@ -8,7 +8,7 @@ import { View,
          Platform,
          Alert
       } from 'react-native';
-import AsyncStorage from "@react-native-community/async-storage"
+import AsyncStorage from '@react-native-community/async-storage'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import moment from 'moment'
 import 'moment/locale/pt-br'
@@ -34,8 +34,8 @@ export default class screens extends Component {
 
    componentDidMount =  async () => {
       const stateString = await AsyncStorage.getItem('tasksState')
-      const state = JSON.parse(stateString) || initialState
-      this.setState(state, this.filterTasks)
+      const savedState = JSON.parse(stateString) || initialState
+      this.setState({showDoneTasks: savedState.showDoneTasks}, this.filterTasks)
    }
    
    filterTasks = () => {
@@ -49,7 +49,7 @@ export default class screens extends Component {
 
       this.setState({visibleTasks})
 
-      AsyncStorage.setItem('tasksState', JSON.stringify(this.state))
+      AsyncStorage.setItem('tasksState', JSON.stringify({showDoneTasks: this.showDoneTasks}))
    }
 
    toggleFilter = () => {
