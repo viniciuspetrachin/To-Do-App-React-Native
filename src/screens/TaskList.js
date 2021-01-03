@@ -8,7 +8,7 @@ import { View,
          Platform,
          Alert
       } from 'react-native';
-import AsyncStorage from "@react-native-community/async-storage"
+import AsyncStorage from '@react-native-community/async-storage'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import moment from 'moment'
 import 'moment/locale/pt-br'

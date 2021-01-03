@@ -30,7 +30,7 @@ export default class screens extends Component {
          this.signin()
       }
    }
-   signup = async () => {
+   signup = () => {
       firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
          .then((response) => {
             this.props.navigation.navigate('Home')
@@ -39,7 +39,7 @@ export default class screens extends Component {
             showError(error)
          });
    }
-   signin = async () => {
+   signin = () => {
       firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
          .then((response) => {
             this.props.navigation.navigate('Home')
