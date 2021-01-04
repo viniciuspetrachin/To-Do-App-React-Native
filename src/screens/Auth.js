@@ -9,24 +9,27 @@ import {
 import backgroundImg from '../../assets/imgs/login.jpg'
 import commonStyle from '../commonStyles'
 import AuthInput from '../components/AuthInput'
-import { firebase } from '../firebase/config'
+import firebase from '../firebase/config'
 import { showError, showSuccess } from '../common'
 
 
 const initialState = {
-      name: '',
-      email: '',
-      password: '',
-      confirmPassword: '',
-      stageNew: false,
+   name: Math.floor(Math.random()*1000) + ' Nome',
+   email: Math.floor(Math.random()*1000000) + '@gmail.com',
+   password: '123123',
+   confirmPassword: '123123',
+   stageNew: false,
 }
-
 export default class screens extends Component {
+   constructor(){
+      super()
 
-   state = {
-      ...initialState
+      this.state = {
+         ...initialState
+      }
+      this.usersRef = firebase.firestore().collection('users')
    }
-
+   
    signinOrSignup = () => {
       if (this.state.stageNew) {
          this.signup()
@@ -34,10 +37,17 @@ export default class screens extends Component {
          this.signin()
       }
    }
-   signup = () => {
-      firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
-         .then((response) => {
-            this.setState({...initialState}, showSuccess('Usuário criado!'))
+
+
+   signup = async () => {
+      await firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
+         .then(async response => {
+            const data = {
+               uid: response.user.uid,
+               name: this.state.name,
+               email: this.state.email
+            }
+            this.props.navigation.navigate('Home', data)
          })
          .catch((error) => {
             showError(error)
@@ -46,13 +56,13 @@ export default class screens extends Component {
    signin = () => {
       firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
          .then((response) => {
-            this.props.navigation.navigate('Home', response.user)
+           this.props.navigation.navigate('Home', response.user)
          })
          .catch((error) => {
             showError(error)
          });
    }
-
+   
    render() {
       return (
          <ImageBackground style={styles.background} source={backgroundImg}>
