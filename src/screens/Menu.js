@@ -5,18 +5,16 @@ import { Gravatar } from 'react-native-gravatar'
 import commonStyles from '../commonStyles'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import Icon from 'react-native-vector-icons/FontAwesome'
-import { firebase } from '../firebase/config'
+import firebase from '../firebase/config'
 import { showError } from '../common'
 
 export default props => {
-
    const email = props.navigation.getParam('email')
-  
    const options = {
       email,
       secure: true
    }
-   console.log('Mail: '+ email)
+
    const logout = async () => {
       try{
          await firebase.auth().signOut().then(() => {
