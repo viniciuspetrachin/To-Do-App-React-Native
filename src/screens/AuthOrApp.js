@@ -15,33 +15,10 @@ import {
 import firebase from '../firebase/config'
 import auth from '@react-native-firebase/auth';
 
+
 export default class screens extends Component {
 
-constructor(){
-   super()
-   function onAuthStateChanged(user) {
-      setUser(user);
-      if (initializing) setInitializing(false);
-    }
-    useEffect(() => {
-      const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-      return subscriber; // unsubscribe on unmount
-    }, []);
-  
-    if (initializing) return null;
-}
 
-
-      
-
-       componentDidMount = () => {
-          if(!user) this.props.navigation.navigate('Auth')
-          else {
-             this.props.navigation.navigate('Home')
-          }
-       }
-     
-/*
    componentDidMount = async () => {
       try {
          await firebase.auth().onAuthStateChanged((user) => {
@@ -56,7 +33,7 @@ constructor(){
       }
 
    }
-   */
+
 
    render() {
       return (
