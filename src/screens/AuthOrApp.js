@@ -8,20 +8,21 @@ import {
    StyleSheet,
    View
 } from 'react-native';
-import {
-   showError
-} from '../common';
+import { showError} from '../common';
 
-import firebase from '../firebase/config'
-import auth from '@react-native-firebase/auth';
+import auth from '@react-native-firebase/auth'
 
 
 export default class screens extends Component {
 
+   state = {
+      initializing : true,
+      user : null,
+   }
 
-   componentDidMount = async () => {
+   componentDidMount = () => {
       try {
-         await firebase.auth().onAuthStateChanged((user) => {
+         auth().onAuthStateChanged(user  => {
             if (user) {
                this.props.navigation.navigate('Home', user)
             } else {
@@ -33,7 +34,6 @@ export default class screens extends Component {
       }
 
    }
-
 
    render() {
       return (

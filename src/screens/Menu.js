@@ -7,6 +7,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import firebase from '../firebase/config'
 import { showError } from '../common'
+import auth from '@react-native-firebase/auth'
 
 export default props => {
    const email = props.navigation.getParam('email')
@@ -16,16 +17,13 @@ export default props => {
    }
 
    const logout = async () => {
-      try{
-         await firebase.auth().signOut().then(() => {
-            props.navigation.navigate('AuthOrApp')
-         }).catch(err =>{
+      auth()
+         .signOut()
+         .then(() => props.navigation.navigate('AuthOrApp'))
+         .catch(err => {
             showError(err)
          })
-      } catch(err) {
-         showError('Não foi possível deslogar!')
-      }
-      
+
    }
    return (
       <ScrollView>
@@ -36,11 +34,11 @@ export default props => {
             </View>
             <TouchableOpacity onPress={logout}>
                <View style={styles.logoutIcon}>
-                  <Icon name='sign-out' size={30} color='#800'/>
+                  <Icon name='sign-out' size={30} color='#800' />
                </View>
-         </TouchableOpacity>
+            </TouchableOpacity>
          </View>
-        
+
          <DrawerItems {...props} />
       </ScrollView>
    )
@@ -73,7 +71,7 @@ const styles = StyleSheet.create({
       marginBottom: 10,
       color: '#000'
    },
-   logoutIcon:{
+   logoutIcon: {
       marginLeft: 10,
       marginBottom: 10,
    }
