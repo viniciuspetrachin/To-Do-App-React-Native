@@ -13,6 +13,9 @@ import AuthInput from '../components/AuthInput'
 import { showError, showSuccess } from '../common'
 
 import auth from '@react-native-firebase/auth'
+import firestore from '@react-native-firebase/firestore'
+
+const usersCollection = firestore().collection('users')
 
 
 const initialState = {
@@ -32,6 +35,25 @@ export default class screens extends Component {
 
 
    }
+   createUser = async user => {
+      await usersCollection.doc(user.uid).get()
+      .then((docSnapshot) => {
+         if(docSnapshot.exists)
+            return this.props.navigation.navigate('Home')
+      })
+      await usersCollection
+         .doc(user.uid)
+         .set({
+            uid: user.uid,
+            email: user.email,
+            name: this.state.name,
+            tasks:{
+            }
+         })
+         .then(() => {
+            return this.props.navigation.navigate('Home')
+         });
+   }
 
    componentDidMount = async () => {
 
@@ -49,8 +71,9 @@ export default class screens extends Component {
    signup = () => {
       auth()
          .createUserWithEmailAndPassword(this.state.email, this.state.password)
-         .then(() => {
-            showSuccess(`Bem-vindo ${this.state.name}`)  
+         .then((response) => {
+            this.createUser(response.user)
+            showSuccess(`Bem-vindo ${this.state.name}`)
          })
          .catch(error => {
             if (error.code === 'auth/email-already-in-use') {
@@ -65,7 +88,8 @@ export default class screens extends Component {
    signin = () => {
       auth()
          .signInWithEmailAndPassword(this.state.email, this.state.password)
-         .then(() => {
+         .then((response) => {
+            this.createUser(response.user)
             showSuccess('Logado com sucesso!')
          })
          .catch(error => {
