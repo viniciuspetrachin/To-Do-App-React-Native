@@ -13,4 +13,4 @@ To have options such as: Weekly, Monthly and Daily tasks.
 
 The idea is that it is a good 'todo list' simple and easy to use and will be launched on the Playstore.
 
-![Register Area](https://i.ibb.co/L81tvbK/Screenshot-1610021853.png)![Login Area](https://i.ibb.co/k9fwfkm/Screenshot-1610021834.png)![Tasks area](https://i.ibb.co/djvtj3X/Screenshot-1610021813.png)
+![Register Area](https://i.ibb.co/xqS2ZGS/2.jpg)![Tasks area](https://i.ibb.co/VWM8x0m/1.jpg)
