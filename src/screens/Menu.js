@@ -5,9 +5,10 @@ import { Gravatar } from 'react-native-gravatar'
 import commonStyles from '../commonStyles'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import Icon from 'react-native-vector-icons/FontAwesome'
-import firebase from '../firebase/config'
-import { showError } from '../common'
+
 import auth from '@react-native-firebase/auth'
+
+import { showError } from '../common'
 
 export default props => {
    const email = props.navigation.getParam('email')
@@ -18,12 +19,8 @@ export default props => {
 
    const logout = async () => {
       auth()
-         .signOut()
-         .then(() => props.navigation.navigate('AuthOrApp'))
-         .catch(err => {
-            showError(err)
-         })
-
+      .signOut()
+      .then(() => console.log('User signed out!'))
    }
    return (
       <ScrollView>

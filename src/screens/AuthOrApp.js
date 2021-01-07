@@ -8,32 +8,43 @@ import {
    StyleSheet,
    View
 } from 'react-native';
-import { showError} from '../common';
+import { showError } from '../common';
 
 import auth from '@react-native-firebase/auth'
+import firestore from '@react-native-firebase/firestore'
 
+const usersCollection = firestore().collection('Users')
 
 export default class screens extends Component {
 
-   state = {
-      initializing : true,
-      user : null,
+   createUser = async id => {
+      await usersCollection
+         .doc(id)
+         .set({
+            id: id,
+            name: "Teste Senor",
+         })
+         .then(() => {
+            this.props.navigation.navigate('Home')
+         });
    }
 
    componentDidMount = () => {
       try {
-         auth().onAuthStateChanged(user  => {
+         auth().onAuthStateChanged(user => {
             if (user) {
-               this.props.navigation.navigate('Home', user)
+              this.createUser(user.uid)
             } else {
                this.props.navigation.navigate('Auth')
             }
          })
       } catch (err) {
-         showError('Não foi possível logar na aplicação')
+         this.props.navigation.navigate('Auth')
       }
 
    }
+
+
 
    render() {
       return (

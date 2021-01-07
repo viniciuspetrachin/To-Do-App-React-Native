@@ -4,18 +4,20 @@ import {
    ImageBackground,
    Text, StyleSheet,
    TouchableOpacity,
-   Alert
 } from 'react-native'
+
 import backgroundImg from '../../assets/imgs/login.jpg'
 import commonStyle from '../commonStyles'
 import AuthInput from '../components/AuthInput'
-import firebase from '../firebase/config'
+
 import { showError, showSuccess } from '../common'
+
 import auth from '@react-native-firebase/auth'
+
 
 const initialState = {
    name: Math.floor(Math.random() * 1000) + ' Nome',
-   email: Math.floor(Math.random() * 1000000) + '@gmail.com',
+   email: Math.floor(Math.random() * 10000) + '@gmail.com',
    password: '123123',
    confirmPassword: '123123',
    stageNew: false,
@@ -27,7 +29,12 @@ export default class screens extends Component {
       this.state = {
          ...initialState
       }
-      this.usersRef = firebase.firestore().collection('users')
+
+
+   }
+
+   componentDidMount = async () => {
+
    }
 
    signinOrSignup = () => {
@@ -40,42 +47,29 @@ export default class screens extends Component {
 
 
    signup = () => {
-
-      auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
+      auth()
+         .createUserWithEmailAndPassword(this.state.email, this.state.password)
          .then(() => {
-            console.log('User account created & signed in!')
-            this.props.navigation.navigate('Home')
+            showSuccess(`Bem-vindo ${this.state.name}`)  
          })
          .catch(error => {
             if (error.code === 'auth/email-already-in-use') {
-               console.log('That email address is already in use!')
+               showError('E-mail em uso');
             }
-
             if (error.code === 'auth/invalid-email') {
-               console.log('That email address is invalid!')
+               showError('E-mail inválido');
             }
-
-            console.error(error)
+            showError('Um erro desconhecido ocorreu.')
          });
-
-
    }
    signin = () => {
-      auth().signInWithEmailAndPassword(this.state.email, this.state.password)
+      auth()
+         .signInWithEmailAndPassword(this.state.email, this.state.password)
          .then(() => {
-            console.log('Signed in!');
-            this.props.navigation.navigate('Home')
+            showSuccess('Logado com sucesso!')
          })
          .catch(error => {
-            if (error.code === 'auth/email-already-in-use') {
-               console.log('That email address is already in use!');
-            }
-
-            if (error.code === 'auth/invalid-email') {
-               console.log('That email address is invalid!');
-            }
-
-            console.error(error);
+            showError(error);
          });
    }
 
