@@ -9,7 +9,7 @@ import {
    Platform,
    Alert
 } from 'react-native';
-import AsyncStorage from '@react-native-community/async-storage'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import moment from 'moment'
 import 'moment/locale/pt-br'
@@ -24,8 +24,6 @@ import commonStyles from '../commonStyles';
 import Task from '../components/Task'
 import AddTask from './AddTask'
 
-import firestore from '@react-native-firebase/firestore'
-import auth from '@react-native-firebase/auth'
 
 const initialState = {
    showAddTask: false,
@@ -38,18 +36,12 @@ const initialState = {
 export default class screens extends Component {
    constructor() {
       super()
-      this.getUser()
    }
 
    state = {
       ...initialState
    }
 
-
-   getUser = async () => {
-      const userDoc = await firestore().collection('users').doc(userId).get()
-      Alert.alert('Usuário: ' + userDoc.name)
-   }
 
    componentDidMount = async () => {
       const stateString = await AsyncStorage.getItem('tasksState')
