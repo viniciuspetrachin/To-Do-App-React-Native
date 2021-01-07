@@ -13,30 +13,16 @@ import { showError } from '../common';
 import auth from '@react-native-firebase/auth'
 import firestore from '@react-native-firebase/firestore'
 
-const usersCollection = firestore().collection('Users')
+const usersCollection = firestore().collection('users')
 
 export default class screens extends Component {
 
-   createUser = async id => {
-      await usersCollection
-         .doc(id)
-         .set({
-            id: id,
-            name: "Teste Senor",
-         })
-         .then(() => {
-            this.props.navigation.navigate('Home')
-         });
-   }
+
 
    componentDidMount = () => {
       try {
          auth().onAuthStateChanged(user => {
-            if (user) {
-              this.createUser(user.uid)
-            } else {
                this.props.navigation.navigate('Auth')
-            }
          })
       } catch (err) {
          this.props.navigation.navigate('Auth')
