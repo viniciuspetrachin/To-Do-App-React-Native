@@ -15,7 +15,13 @@ import DateTimePicker from '@react-native-community/datetimepicker'
 
 import commonStyles from '../commonStyles'
 
+import firestore from '@react-native-firebase/firestore'
+import auth from '@react-native-firebase/auth'
+import { showError } from '../common'
+
 const initialState = { desc: '', date: new Date(), showDatePicker: false }
+const usersCollection = firestore().collection('users')
+
 
 export default class AddTask extends Component {
 
@@ -23,14 +29,29 @@ export default class AddTask extends Component {
         ...initialState
     }
 
-    save = () => {
+
+
+    save = async () => {
         const newTask = {
             desc: this.state.desc,
             date: this.state.date
         }
 
         this.props.onSave && this.props.onSave(newTask)
-        this.setState({ ...initialState })
+        
+
+        await usersCollection.doc(auth().currentUser.uid)
+        .collection('tasks')
+        .add(newTask)
+        .then(() => {
+            this.setState({ ...initialState })
+        })
+        .catch(error => {
+            console.log(error)
+            showError('Um erro desconhecido ocorreu')
+         })
+    
+        
     }
 
     getDatePicker = () => {
