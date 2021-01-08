@@ -46,9 +46,7 @@ export default class screens extends Component {
          .set({
             uid: user.uid,
             email: user.email,
-            name: this.state.name,
-            tasks:{
-            }
+            name: this.state.name
          })
          .then(() => {
             return this.props.navigation.navigate('Home')
