@@ -24,6 +24,9 @@ import commonStyles from '../commonStyles';
 import Task from '../components/Task'
 import AddTask from './AddTask'
 
+import auth from '@react-native-firebase/auth'
+import firestore from '@react-native-firebase/firestore'
+
 
 const initialState = {
    showAddTask: false,
@@ -46,7 +49,16 @@ export default class screens extends Component {
    componentDidMount = async () => {
       const stateString = await AsyncStorage.getItem('tasksState')
       const savedState = JSON.parse(stateString) || initialState
-      this.setState({ showDoneTasks: savedState.showDoneTasks }, this.filterTasks)
+
+      
+      const tasksFirestore = await firestore()
+      .collection(`user/${auth().currentUser.uid}/tasks`)
+      .get()
+
+
+      this.setState([{ showDoneTasks: savedState.showDoneTasks }, {tasks: tasksFirestore}], this.filterTasks)
+
+      console.log(`Tasks: ${tasksFirestore}`)
 
    }
 
